@@ -1,8 +1,10 @@
 // https://youtu.be/oCm46sUILcs
-// 15:00
+// 28:00
 package main
 
-import "fmt"
+import (
+	"projectx/network"
+)
 
 // Server
 // Transport layer -> tcp, udp
@@ -10,5 +12,11 @@ import "fmt"
 // TX -> Transaction
 
 func main() {
-	fmt.Println("Hello, World!")
+	trLocal := network.NewLocalTransport("LOCAL")
+
+	opts := network.ServerOpts{
+		Transport: []network.Transport{trLocal},
+	}
+
+	s := network.NewServer(opts)
 }
