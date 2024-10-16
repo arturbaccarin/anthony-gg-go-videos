@@ -1,5 +1,5 @@
 // https://youtu.be/oCm46sUILcs
-// 28:00
+// 39:40
 package main
 
 import (
@@ -13,10 +13,12 @@ import (
 
 func main() {
 	trLocal := network.NewLocalTransport("LOCAL")
+	trRemote := network.NewLocalTransport("REMOTE")
 
 	opts := network.ServerOpts{
 		Transport: []network.Transport{trLocal},
 	}
 
 	s := network.NewServer(opts)
+	s.Start()
 }

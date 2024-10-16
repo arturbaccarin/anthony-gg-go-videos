@@ -34,8 +34,6 @@ func (t *LocalTransport) Connect(tr Transport) error {
 	return nil
 }
 
-/*************  ✨ Codeium Command ⭐  *************/
-/******  d1436587-08ce-4c2b-8bc2-0ee4d10b26ab  *******/
 func (t *LocalTransport) SendMessage(to NetAddr, payload []byte) error {
 	t.lock.Lock()
 	defer t.lock.Unlock()
