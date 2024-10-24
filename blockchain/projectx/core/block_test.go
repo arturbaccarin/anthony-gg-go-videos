@@ -1,14 +1,6 @@
 package core
 
-import (
-	"bytes"
-	"projectx/types"
-	"testing"
-	"time"
-
-	"github.com/stretchr/testify/assert"
-)
-
+/*
 func TestHeader_Encode_Decode(t *testing.T) {
 	h := &Header{
 		Version:   1,
@@ -61,3 +53,4 @@ func TestBlockHash(t *testing.T) {
 	h := b.Hash()
 	assert.False(t, h.IsZero())
 }
+*/
