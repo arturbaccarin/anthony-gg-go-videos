@@ -1,5 +1,11 @@
 package core
 
+import "testing"
+
+func TestHashBlock(t *testing.T) {
+
+}
+
 /*
 func TestHeader_Encode_Decode(t *testing.T) {
 	h := &Header{
