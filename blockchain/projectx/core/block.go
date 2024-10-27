@@ -24,8 +24,17 @@ type Block struct {
 	hash types.Hash
 }
 
+func NewBlock(h *Header, tx []Transaction) *Block {
+	return &Block{
+		Header:       h,
+		Transactions: tx,
+	}
+}
+
+func (b *Block)
+
 func (b *Block) Decode(r io.Reader, dec Decoder[*Block]) error {
-	return dec.Decoder(r, b)
+	return dec.Decode(r, b)
 }
 
 func (b *Block) Encode(w io.Writer, enc Encoder[*Block]) error {
