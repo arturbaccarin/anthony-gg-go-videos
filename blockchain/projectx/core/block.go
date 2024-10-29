@@ -1,6 +1,8 @@
 package core
 
 import (
+	"bytes"
+	"encoding/gob"
 	"io"
 	"projectx/crypto"
 	"projectx/types"
@@ -31,7 +33,9 @@ func NewBlock(h *Header, tx []Transaction) *Block {
 	}
 }
 
-// func (b *Block)
+func (b *Block) Sign(privKey crypto.PrivateKey) *crypto.Signature {
+	// sign, err := privKey.Sign()
+}
 
 func (b *Block) Decode(r io.Reader, dec Decoder[*Block]) error {
 	return dec.Decode(r, b)
@@ -47,6 +51,14 @@ func (b *Block) Hash(hasher Hasher[*Block]) types.Hash {
 	}
 
 	return b.hash
+}
+
+func (b *Block) HeaderBytes() []byte {
+	buf := &bytes.Buffer{}
+	enc := gob.NewEncoder(buf)
+	enc.Encode(b.Header)
+
+	return buf.Bytes()
 }
 
 // func (b *Block) Hash() types.Hash {
