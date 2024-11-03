@@ -1,5 +1,5 @@
 // https://youtu.be/kYJyzTkIZjg
-// 10:00 - commit of the day. sorry guys...
+// 10:00
 package main
 
 import (
