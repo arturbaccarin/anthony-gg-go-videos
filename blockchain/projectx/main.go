@@ -1,5 +1,5 @@
 // https://youtu.be/kYJyzTkIZjg
-// 10:00
+// 25:00
 package main
 
 import (

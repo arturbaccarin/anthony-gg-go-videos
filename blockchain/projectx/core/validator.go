@@ -1,7 +1,7 @@
 package core
 
 type Validator interface {
-	VaalidateBlock(*Block) error
+	ValidateBlock(*Block) error
 }
 
 type BlockValidator struct {
