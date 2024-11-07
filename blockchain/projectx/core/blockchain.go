@@ -1,5 +1,7 @@
 package core
 
+import "fmt"
+
 type Blockchain struct {
 	store     Storage
 	headers   []*Header
@@ -29,6 +31,14 @@ func (bc *Blockchain) AddBlock(b *Block) error {
 	}
 
 	return bc.addBlockWithoutValidation(b)
+}
+
+func (bc *Blockchain) GetHeader(height uint32) (*Header, error) {
+	if height > bc.Height() {
+		return nil, fmt.Errorf("height (%d) too high", height)
+	}
+
+	return bc.headers[height], nil
 }
 
 func (bc *Blockchain) HasBlock(height uint32) bool {
