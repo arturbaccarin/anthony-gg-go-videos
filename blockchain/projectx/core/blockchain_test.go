@@ -2,24 +2,18 @@ package core
 
 import (
 	"fmt"
+	"projectx/types"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
-
-func newBlockchainWithGenesis(t *testing.T) *Blockchain {
-	bc, err := NewBlockchain(randomBlock(0))
-	assert.Nil(t, err)
-
-	return bc
-}
 
 func TestAddBlock(t *testing.T) {
 	bc := newBlockchainWithGenesis(t)
 
 	lenBlocks := 1000
 	for i := 0; i < lenBlocks; i++ {
-		block := randomBlockWithSignature(t, uint32(i+1))
+		block := randomBlockWithSignature(t, uint32(i+1), getPrevBlockHash(t, bc, uint32(i+1)))
 		assert.Nil(t, bc.AddBlock(block))
 	}
 
@@ -63,4 +57,18 @@ func TestAddBlockToHigh(t *testing.T) {
 	bc := newBlockchainWithGenesis(t)
 
 	assert.NotNil(t, bc.AddBlock(randomBlockWithSignature(t, 3)))
+}
+
+func newBlockchainWithGenesis(t *testing.T) *Blockchain {
+	bc, err := NewBlockchain(randomBlock(0))
+	assert.Nil(t, err)
+
+	return bc
+}
+
+func getPrevBlockHash(t *testing.T, bc *Blockchain, height uint32) types.Hash {
+	prevHeader, err := bc.GetHeader(height - 1)
+	assert.Nil(t, err)
+
+	return BlockHasher{}.Hash(prevHeader)
 }
