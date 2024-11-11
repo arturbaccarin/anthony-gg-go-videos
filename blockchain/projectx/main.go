@@ -1,5 +1,6 @@
 // https://youtu.be/tUce0OLpYOQ
 // 23:00
+// commit of the day :')
 package main
 
 import (
