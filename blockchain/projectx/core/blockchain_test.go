@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"projectx/types"
 	"testing"
 
@@ -20,16 +19,13 @@ func TestAddBlock(t *testing.T) {
 	assert.Equal(t, bc.Height(), uint32(lenBlocks))
 	assert.Equal(t, len(bc.headers), lenBlocks+1)
 
-	assert.NotNil(t, bc.AddBlock(randomBlock(89)))
+	assert.NotNil(t, bc.AddBlock(randomBlock(89, types.Hash{})))
 }
 
 func TestNewBlockchain(t *testing.T) {
-	bc, err := NewBlockchain(randomBlock(0))
-	assert.Nil(t, err)
-	assert.NotNil(t, bc)
+	bc := newBlockchainWithGenesis(t)
+	assert.NotNil(t, bc.validator)
 	assert.Equal(t, bc.Height(), uint32(0))
-
-	fmt.Println(bc.Height())
 }
 
 func TestHasBlock(t *testing.T) {
@@ -43,7 +39,7 @@ func TestGetHeader(t *testing.T) {
 
 	lenBlocks := 1000
 	for i := 0; i < lenBlocks; i++ {
-		block := randomBlockWithSignature(t, uint32(i+1))
+		block := randomBlockWithSignature(t, uint32(i+1), getPrevBlockHash(t, bc, uint32(i+1)))
 		assert.Nil(t, bc.AddBlock(block))
 
 		header, err := bc.GetHeader(uint32(i + 1))
@@ -56,11 +52,11 @@ func TestGetHeader(t *testing.T) {
 func TestAddBlockToHigh(t *testing.T) {
 	bc := newBlockchainWithGenesis(t)
 
-	assert.NotNil(t, bc.AddBlock(randomBlockWithSignature(t, 3)))
+	assert.NotNil(t, bc.AddBlock(randomBlockWithSignature(t, 3, types.Hash{})))
 }
 
 func newBlockchainWithGenesis(t *testing.T) *Blockchain {
-	bc, err := NewBlockchain(randomBlock(0))
+	bc, err := NewBlockchain(randomBlock(0, types.Hash{}))
 	assert.Nil(t, err)
 
 	return bc

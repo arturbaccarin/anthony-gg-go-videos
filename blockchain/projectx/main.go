@@ -1,6 +1,6 @@
 // https://youtu.be/tUce0OLpYOQ
-// 23:00
-// commit of the day :')
+// 30:00
+
 package main
 
 import (
