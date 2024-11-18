@@ -2,12 +2,14 @@ package core
 
 import (
 	"fmt"
+	"sync"
 
 	"github.com/sirupsen/logrus"
 )
 
 type Blockchain struct {
 	store     Storage
+	lock      sync.RWMutex
 	headers   []*Header
 	validator Validator
 }
