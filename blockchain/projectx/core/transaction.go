@@ -1,8 +1,10 @@
 package core
 
 import (
+	"crypto/sha256"
 	"fmt"
 	"projectx/crypto"
+	"projectx/types"
 )
 
 type Transaction struct {
@@ -10,6 +12,10 @@ type Transaction struct {
 
 	From      crypto.PublicKey
 	Signature *crypto.Signature
+}
+
+func (tx *Transaction) Hash() types.Hash {
+	return types.Hash(sha256.Sum256(tx.Data))
 }
 
 func (tx *Transaction) Sign(privKey crypto.PrivateKey) error {
