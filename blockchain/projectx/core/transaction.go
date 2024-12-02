@@ -13,6 +13,12 @@ type Transaction struct {
 	Signature *crypto.Signature
 }
 
+func NewTransaction(data []byte) *Transaction {
+	return &Transaction{
+		Data: data,
+	}
+}
+
 func (tx *Transaction) Hash(hasher Hasher[*Transaction]) types.Hash {
 	return hasher.Hash(tx)
 }

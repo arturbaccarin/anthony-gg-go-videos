@@ -8,11 +8,14 @@ import (
 
 type ServerOpts struct {
 	Transport  []Transport
+	BlockTime  time.Duration
 	PrivateKey *crypto.PrivateKey
 }
 
 type Server struct {
 	ServerOpts
+	blockTime   time.Duration
+	memPool     *TxPool
 	isValidator bool
 	rpcCh       chan RPC
 	quitCh      chan struct{}
@@ -21,6 +24,7 @@ type Server struct {
 func NewServer(opts ServerOpts) *Server {
 	return &Server{
 		ServerOpts:  opts,
+		memPool:     NewTxPool(),
 		isValidator: opts.PrivateKey != nil,
 		rpcCh:       make(chan RPC),
 		quitCh:      make(chan struct{}, 1),
