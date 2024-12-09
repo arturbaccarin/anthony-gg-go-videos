@@ -2,6 +2,7 @@ package network
 
 import (
 	"fmt"
+	"projectx/core"
 	"projectx/crypto"
 	"time"
 )
@@ -24,6 +25,7 @@ type Server struct {
 func NewServer(opts ServerOpts) *Server {
 	return &Server{
 		ServerOpts:  opts,
+		blockTime:   opts.BlockTime,
 		memPool:     NewTxPool(),
 		isValidator: opts.PrivateKey != nil,
 		rpcCh:       make(chan RPC),
@@ -33,7 +35,7 @@ func NewServer(opts ServerOpts) *Server {
 
 func (s *Server) Start() {
 	s.initTransport()
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(s.blockTime)
 
 free:
 	for {
@@ -43,12 +45,26 @@ free:
 		case <-s.quitCh:
 			break free
 		case <-ticker.C:
-			fmt.Println("do stuff every x seconds")
-
+			if s.isValidator {
+				fmt.Println("creating a new block")
+			}
 		}
 	}
 
 	fmt.Println("Server shutdown")
+}
+
+func (s *Server) handleTransaction(tx *core.Transaction) error {
+	if err := tx.Verify(); err != nil {
+		return err
+	}
+
+	return s.memPool.Add(tx)
+}
+
+func (s *Server) createNewBlock() error {
+	fmt.Println("creating a new block")
+	return nil
 }
 
 func (s *Server) initTransport() {

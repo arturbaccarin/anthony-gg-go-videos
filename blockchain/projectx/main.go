@@ -1,5 +1,5 @@
 // https://youtu.be/DGEvsk8LvRU
-// 30:10
+// 38:00
 // this is the commit of the day again, because of inscryption game
 
 package main
